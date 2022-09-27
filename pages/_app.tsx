@@ -7,6 +7,7 @@ import { AppProps } from "next/app";
 import theme from "theme";
 import "index.css";
 import { SessionProvider, useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import PageLoading from "components/page-loading";
 import type { NextComponentType } from "next";
 
@@ -15,6 +16,7 @@ const clientSideEmotionCache = createEmotionCache();
 
 type CustomAppProps = AppProps & {
   Component: NextComponentType & { auth?: boolean };
+  pageProps: { session?: Session };
 };
 
 interface MyAppProps extends CustomAppProps {
@@ -25,7 +27,7 @@ export default function App(props: MyAppProps): JSX.Element {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { session, ...pageProps },
+    pageProps: { session, ...pageProps }
   } = props;
 
   return (
