@@ -1,9 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import Head from "next/head";
-import { signIn, getSession } from "next-auth/react";
-import { GetServerSideProps } from "next";
+import { useSession, signOut } from "next-auth/react";
+import { format } from "date-fns";
+import Link from "components/link";
 
-export default function Index(): JSX.Element {
+export default function Home(): JSX.Element {
+  const { data: session } = useSession();
+
   return (
     <Box
       sx={{
@@ -14,7 +17,7 @@ export default function Index(): JSX.Element {
       }}
     >
       <Head>
-        <title>App name</title>
+        <title>Home</title>
       </Head>
       <Box
         sx={{
@@ -50,35 +53,32 @@ export default function Index(): JSX.Element {
 
       <Box
         sx={{
-          backgroundColor: "#fff",
+          backgroundColor: "#0f0",
           display: "flex",
           flexDirection: "column",
           flexGrow: 1,
           p: 2
         }}
       >
-        <Typography>Entre no app</Typography>
-        <button onClick={() => signIn("cognito")}>Entrar</button>
+        <Typography>Mi casa es su casa {session?.user?.email}</Typography>
+        <button onClick={() => signOut()}>Sign out</button>
+
+        <Box sx={{ mt: 2 }}>
+          <Link href="/protected-page">Go to protected page</Link>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          backgroundColor: "#ff0",
+          display: "flex",
+          flexDirection: "column",
+          m: 2
+        }}
+      >
+        <Typography>Created by Heitor Polizeli Rodrigues</Typography>
+        <Typography>{format(new Date(), "d LLLL, yyyy")}</Typography>
       </Box>
     </Box>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-
-  if (session) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: {
-      session
-    }
-  };
-};

@@ -14,5 +14,3 @@ export default function ProtectedPage(): JSX.Element {
     </>
   );
 }
-
-ProtectedPage.auth = true;

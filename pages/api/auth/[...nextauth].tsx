@@ -6,13 +6,10 @@ export const authOptions: NextAuthOptions = {
     CognitoProvider({
       clientId: process.env.COGNITO_CLIENT_ID,
       clientSecret: process.env.COGNITO_CLIENT_SECRET,
-      issuer: process.env.COGNITO_ISSUER,
-    }),
+      issuer: process.env.COGNITO_ISSUER
+    })
   ],
-  pages: {
-    signIn: "/auth/signin",
-    error: "/auth/error",
-  },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
       // Persist the OAuth access_token to the token right after signin
@@ -25,8 +22,8 @@ export const authOptions: NextAuthOptions = {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
       return session;
-    },
-  },
+    }
+  }
 };
 
 export default NextAuth(authOptions);

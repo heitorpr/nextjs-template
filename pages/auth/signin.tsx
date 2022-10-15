@@ -5,7 +5,7 @@ import {
   getProviders,
   LiteralUnion,
   ClientSafeProvider,
-  signIn,
+  signIn
 } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -33,7 +33,7 @@ function extractCallBackUrl(
 
 export default function SignIn({ providers }: SignInPageProps): JSX.Element {
   const {
-    query: { callbackUrl },
+    query: { callbackUrl }
   } = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ export default function SignIn({ providers }: SignInPageProps): JSX.Element {
         height: "100%",
         justifyContent: "center",
         alignContent: "center",
-        alignItems: "center",
+        alignItems: "center"
       }}
     >
       {!loading && (
@@ -77,6 +77,6 @@ export default function SignIn({ providers }: SignInPageProps): JSX.Element {
 export async function getServerSideProps(context: GetServerSideProps) {
   const providers = await getProviders();
   return {
-    props: { providers },
+    props: { providers }
   };
 }
